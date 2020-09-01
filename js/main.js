@@ -9,10 +9,11 @@ const searchStates = async searchText => {
     //check match to current input text
     let matches = states.filter(state => {
         const regex = new RegExp(`^${searchText}`, 'gi');
-        return state.name.match(regex) || state.abbr.match(regex);
+        return state.name.match(regex) || state.abbr.match(regex) || state.capital.match(regex);
     })
     if(searchText.length === 0) {
         matches = []
+        matchList.innerHTML = ''
     }
     outputHtml(matches);
 }
@@ -23,15 +24,15 @@ const outputHtml = matches => {
         const html = matches.map(match => `
         <div class="card card-body mb-1">
             <h4>${match.name} (${match.abbr}) 
-                <span class="primary-text">
+                <span class="text-primary">
                      ${match.capital}
                 </span> 
             </h4>
             <small> Lat: ${match.lat} / Long: ${match.long} </small>
         </div>
-        `);
+        `).join('');
 
-        console.log(html)
+        matchList.innerHTML = html;
     }
 }
 
